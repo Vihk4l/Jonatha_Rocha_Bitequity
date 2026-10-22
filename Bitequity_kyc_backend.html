@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Wallet Demo</title>
+  <style>
+    :root {
+      --bg: #f3f3f4;
+      --card: #fff;
+      --text: #2b2d31;
+      --muted: #6b6f76;
+      --line: #dcdde0;
+      --orange: #f7931a;
+      --orange-d: #d97b06;
+      --grey: #3a3d42;
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    @media (prefers-color-scheme:dark) {
+      :root:not([data-theme="light"]) {
+        --bg: #1b1c1f;
+        --card: #26282c;
+        --text: #ececee;
+        --muted: #a0a4ab;
+        --line: #3a3d42;
+        --grey: #101113;
+        color-scheme: dark
+      }
+    }
+
+    :root[data-theme="dark"] {
+      --bg: #1b1c1f;
+      --card: #26282c;
+      --text: #ececee;
+      --muted: #a0a4ab;
+      --line: #3a3d42;
+      --grey: #101113;
+      color-scheme: dark
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.5
+    }
+
+    header {
+      background: var(--grey);
+      color: #fff;
+      border-bottom: 4px solid var(--orange)
+    }
+
+    .bar {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap
+    }
+
+    .logo {
+      width: 150px;
+      height: 44px;
+      /* border: 2px dashed var(--orange); */
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      letter-spacing: .08em;
+      color: var(--orange)
+    }
+
+    .logo img {
+      max-width: 150%;
+      max-height: 150%
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 18px;
+      padding-bottom: 4px;
+      border-bottom: 2px solid transparent
+    }
+
+    nav a.on,
+    nav a:hover {
+      border-color: var(--orange)
+    }
+
+    main {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 24px 20px 48px
+    }
+
+    .banner {
+      background: rgba(247, 147, 26, .15);
+      border: 1px solid var(--orange);
+      border-radius: 8px;
+      padding: 10px 14px;
+      font-size: 14px;
+      margin-bottom: 22px
+    }
+
+    h1 {
+      font-size: clamp(1.3rem, 4vw, 1.8rem);
+      margin: 0 0 6px
+    }
+
+    .sub {
+      color: var(--muted);
+      margin: 0 0 22px
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-bottom: 24px
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 18px
+    }
+
+    .card h2 {
+      font-size: .95rem;
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-weight: 600
+    }
+
+    .coin {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px
+    }
+
+    .dot {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: var(--orange);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0
+    }
+
+    .dot svg {
+      width: 20px;
+      height: 20px
+    }
+
+    .bal {
+      font-size: 1.7rem;
+      font-weight: 700
+    }
+
+    .bal small {
+      font-size: .9rem;
+      color: var(--muted);
+      font-weight: 500
+    }
+
+    .link {
+      display: inline-block;
+      color: var(--orange-d);
+      font-weight: 600;
+      text-decoration: none;
+      border-bottom: 2px solid var(--orange)
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--orange);
+      color: #1b1c1f;
+      border: 0;
+      border-radius: 8px;
+      padding: 12px 22px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      text-decoration: none
+    }
+
+    .btn:hover {
+      background: var(--orange-d)
+    }
+
+    ol,
+    ul {
+      padding-left: 20px
+    }
+
+    li {
+      margin-bottom: 6px
+    }
+
+    .view {
+      display: none
+    }
+
+    .view.on {
+      display: block
+    }
+
+    footer {
+      color: var(--muted);
+      font-size: 13px;
+      text-align: center;
+      padding: 0 20px 30px
+    }
+
+    #italics {
+      font-style: italic;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="bar">
+      <!-- <img src="Bitequity_logo.jpeg" alt="Logo"> -->
+      <div class="logo" id="logo"><img src="Bitequity_logo.jpeg"></div>
+      <nav><a href="#wallet" id="n-wallet">Wallet</a><a href="#kyc" id="n-kyc">KYC</a></nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="view" id="v-wallet">
+      <div class="banner"><strong>¡Solo acceso al backend!</strong> Si tienes acceso a estos controles, te recomendamos
+        encarecidamente que no los compartas con terceros, ¡ya que Bitequity
+        no se hará responsable de la pérdida de fondos!.
+        <hr>Correo electrónico: med.py.sin@gmail.com | Número de teléfono: +595-973670728
+      </div>
+      <h1>Finalización de la verificación KYC para Jonathan Rocha Santos <span id="italics">(BIT_e4Bkv)</span></h1>
+
+      <p class="sub">Tus activos</p>
+      <div class="grid">
+        <div class="card">
+          <div class="coin">
+            <div class="dot" style="background:#26A17B"><svg viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="#26A17B" />
+                <path fill="#fff"
+                  d="M17.9 17.4v-.01c-.11.01-.68.04-1.95.04-1.01 0-1.72-.03-1.97-.04v.02c-3.28-.14-5.73-.72-5.73-1.41s2.45-1.27 5.73-1.41v2.25c.25.02.98.06 1.98.06 1.21 0 1.82-.05 1.93-.06v-2.24c3.27.14 5.71.72 5.71 1.4s-2.44 1.27-5.71 1.4zm0-3.05v-2.01h4.57V9.25H9.55v3.09h4.57v2.01c-3.72.17-6.51.9-6.51 1.76s2.79 1.6 6.51 1.76v6.3h1.97v-6.3c3.71-.17 6.5-.9 6.5-1.76s-2.79-1.59-6.5-1.76z" />
+              </svg></div>
+            <div>
+              <h2>USDT (ETH)</h2>
+            </div>
+          </div>
+          <div class="bal">$2,000,000.00 <small>USDT</small></div>
+        </div>
+        <div class="card">
+          <div class="coin">
+            <div class="dot" style="background:#26A17B"><svg viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="#26A17B" />
+                <path fill="#fff"
+                  d="M17.9 17.4v-.01c-.11.01-.68.04-1.95.04-1.01 0-1.72-.03-1.97-.04v.02c-3.28-.14-5.73-.72-5.73-1.41s2.45-1.27 5.73-1.41v2.25c.25.02.98.06 1.98.06 1.21 0 1.82-.05 1.93-.06v-2.24c3.27.14 5.71.72 5.71 1.4s-2.44 1.27-5.71 1.4zm0-3.05v-2.01h4.57V9.25H9.55v3.09h4.57v2.01c-3.72.17-6.51.9-6.51 1.76s2.79 1.6 6.51 1.76v6.3h1.97v-6.3c3.71-.17 6.5-.9 6.5-1.76s-2.79-1.59-6.5-1.76z" />
+              </svg></div>
+            <div>
+              <h2>USDT (TRX)</h2>
+            </div>
+          </div>
+          <div class="bal">$0.00 <small>USDT</small></div>
+        </div>
+        <div class="card">
+          <div class="coin">
+            <div class="dot" style="background:#3C3C3D"><svg viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="#3C3C3D" />
+                <path fill="#fff" fill-opacity=".85" d="M16 4v8.87l7.5 3.35z" />
+                <path fill="#fff" d="M16 4 8.5 16.22l7.5-3.35z" />
+                <path fill="#fff" fill-opacity=".85" d="M16 21.97v6.03l7.5-10.38z" />
+                <path fill="#fff" d="M16 28v-6.03l-7.5-4.35z" />
+                <path fill="#fff" fill-opacity=".6" d="M16 20.57l7.5-4.35L16 12.87z" />
+                <path fill="#fff" fill-opacity=".8" d="M8.5 16.22l7.5 4.35v-7.7z" />
+              </svg></div>
+            <div>
+              <h2>Ethereum</h2>
+            </div>
+          </div>
+          <div class="bal">$515.00 <small>ETH</small></div>
+        </div>
+        <div class="card">
+          <div class="coin">
+            <div class="dot" style="background:#F3BA2F"><svg viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="#F3BA2F" />
+                <g fill="#fff">
+                  <path d="M12.12 14.22 16 10.34l3.88 3.88 2.26-2.26L16 5.82l-6.14 6.14z" />
+                  <path d="M5.82 16 8.08 13.74 10.34 16 8.08 18.26z" />
+                  <path d="M12.12 17.78 16 21.66l3.88-3.88 2.26 2.25L16 26.18l-6.14-6.14z" />
+                  <path d="M21.66 16 23.92 13.74 26.18 16 23.92 18.26z" />
+                  <path d="M18.18 16 16 13.82 14.37 15.45 14.18 15.64 13.82 16 16 18.18z" />
+                </g>
+              </svg></div>
+            <div>
+              <h2>BNB Smart Chain</h2>
+            </div>
+          </div>
+          <div class="bal">$0.00 <small>BNB</small></div>
+        </div>
+        <div class="card">
+          <div class="coin">
+            <div class="dot" style="background:#EF0027"><svg viewBox="0 0 32 32">
+                <circle cx="16" cy="16" r="15" fill="#EF0027" />
+                <path fill="#fff" d="m8 10 15.8 2.9L17 24z" />
+                <path fill="#fff" fill-opacity=".75" d="M8 10 22 8.2l1.8 4.7z" />
+                <path fill="#fff" fill-opacity=".55" d="M17 24 12 14.6l11.8-1.7z" />
+              </svg></div>
+            <div>
+              <h2>TRON</h2>
+            </div>
+          </div>
+          <div class="bal">$0.00 <small>TRX</small></div>
+        </div>
+      </div>
+      <p><a class="link" href="#kyc">Completa la verificación KYC →</a></p>
+    </section>
+
+    <section class="view" id="v-kyc">
+      <div class="banner">Se requiere que el usuario complete la verificación KYC pendiente para poder acceder a los
+        activos o realizar cualquier
+        transacción.<hr>Correo electrónico: med.py.sin@gmail.com | Número de teléfono: +595-973670728</div>
+      <h1>Completa Tu Verificación KYC</h1>
+      <p class="sub">Bajo ninguna circunstancia se le permite compartir información con terceros.</p>
+      <div class="grid">
+        <div class="card">
+          <h2>Lo que necesitarás</h2>
+          <ul>
+            <li>Una identificación con foto válida emitida por el gobierno (pasaporte, factura de servicios,
+              identificación nacional o
+              licencia de conducir)</li>
+            <li>Un saldo en cualquier activo criptográfico en su billetera</li>
+            <li>Prueba de fondos. A menos que haya un acuerdo de contrato</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h2>Cómo funciona</h2>
+          <ol>
+            <li>Continuar con el proveedor de verificación</li>
+            <li>Realice un depósito de tarifa de facilitación KYC de $2,000 en su billetera USDT TRX (Tron) a
+              continuación</li>
+            <li>Espera el resultado de la revisión, generalmente en minutos. Te enviarán notificaciones por correo.</li>
+          </ol>
+          <span style="color: rgb(206, 74, 74);font-weight: bold;">Nota importante:</span> Si ha enviado previamente un
+          documento en su cuenta frontend, simplemente proceda con el depósito, ya que completar el
+          KYC es importante para que el usuario pueda iniciar transacciones, incluidas las retiradas.
+        </div>
+      </div>
+      <!-- Swap this URL for your chosen provider's hosted verification link -->
+      <a class="btn" target="_blank" rel="noopener noreferrer">TFNezBznwJxH9vT5F72aN4h9DEBV9okZjJ </a>
+      <p style="margin-top:22px"><a class="link" href="#wallet">← Volver a la cartera</a></p>
+    </section>
+  </main>
+  <footer>Backend de la billetera Bitequity @ 2026 <span style="font-style: italic;">(BIT_e4Bkv)</span>
+    Solo datos de usuario único
+  </footer>
+
+  <script>
+    function route() {
+      var h = (location.hash || "#wallet").replace("#", "");
+      if (h !== "kyc") h = "wallet";
+      ["wallet", "kyc"].forEach(function (k) {
+        document.getElementById("v-" + k).classList.toggle("on", k === h);
+        document.getElementById("n-" + k).classList.toggle("on", k === h);
+      });
+      window.scrollTo(0, 0);
+    }
+    window.addEventListener("hashchange", route);
+    route();
+  </script>
+</body>
+
+</html>
